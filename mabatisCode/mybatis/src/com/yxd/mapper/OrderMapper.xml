@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxd.mapper.OrderMapper">
+	<sql id="selectUserAndOrderSql">
+		<where>
+			`order`.userId = `user`.id
+		</where>
+	</sql>
+	<resultMap type="order" id="UserFindOrders">
+		 <id column="orderId" property="orderId" /> 
+		<result column="orderName" property="orderName" />
+		<result column="orderPrice" property="orderPrice" />
+		<association property="userEx" javaType="userEx">
+			<!-- property:pojo对象中属性名 column:数据库查询出的 -->
+			<id property="id" column="id" />
+			<result property="username" column="username" />
+			<result property="emill" column="emill" />
+		</association>
+		<!-- 如果是一对多就在这里配置 -->
+		<!-- <collection property="本类中的名字" ofType="对应的类"> <id property="id" column="orderdetail_id" 
+			/> <result property="items_id" column="items_id" /> <result property="items_num" 
+			column="items_num" /> </collection> -->
+	</resultMap>
+	<select id="slectUserFindOrders" resultMap="UserFindOrders">
+		SELECT
+		user.username,
+		`order`.*
+		FROM `order`,`user`
+		<include refid="selectUserAndOrderSql"></include>
+	</select>
+</mapper>

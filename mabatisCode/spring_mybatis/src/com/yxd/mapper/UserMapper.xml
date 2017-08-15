@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxd.mapper.UserMapper">
+	<resultMap type="userEx" id="UserFindOrders">
+		<id column="orderId" property="orderId" />
+		<result column="orderName" property="orderName" />
+		<result column="orderPrice" property="orderPrice" />
+		<association property="userEx" javaType="userEx">
+			<id property="id" column="id" />
+			<result property="username" column="username" />
+			<result property="emill" column="emill" />
+
+		</association>
+	</resultMap>
+	<insert id="insertUser" parameterType="com.yxd.pojo.User">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			<!-- 获取到id，自动生成的字后获取，uuid之前获取 slect uuid(); -->
+			<!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id"> -->
+			select Last_INSERT_ID();
+		</selectKey>
+		insert into
+		user(username,password,emill) values
+		(#{username},#{password},#{emill})
+	</insert>
+	<select id="selectUser" parameterType="com.yxd.pojo.User"
+		resultType="com.yxd.pojo.User">
+		select * from user where id=${id}
+	</select>
+	<select id="slectUserFindOrders" resultMap="UserFindOrders">
+		SELECT
+		user.username,
+		`order`.*
+		FROM `order`,`user`
+		WHERE `order`.userId = `user`.id;
+	</select>
+</mapper>
