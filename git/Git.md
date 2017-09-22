@@ -133,6 +133,12 @@ $ git push origin --tags
 $ git push <远程名> ：refs/tags/<删除的标签名>
 </pre>
 
+#### 别名设置
+例如：将显示的log常用操做去起一个记得住的别名
+```git
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+```
+
 ####忽略特殊文件
  有时候，你必须把某些文件放到Git工作目录中，但又不能提交它们，比如保存了数据库密码的配置文件等等，每次git status都会显示Untracked files ...，Git考虑到了大家的感受，这个问题解决起来也很简单，在Git工作区的**根目录**下创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。不需要从头写.gitignore文件，GitHub已经为我们准备了各种配置文件，只需要组合一下就可以使用了。所有配置文件可以直接在线浏览：[https://github.com/github/gitignore](https://github.com/github/gitignore ".gitignore配置部署")
 
@@ -173,3 +179,4 @@ $ touch .gitignore
 
 <br/><br/><br/>
 --->End(完)
+
